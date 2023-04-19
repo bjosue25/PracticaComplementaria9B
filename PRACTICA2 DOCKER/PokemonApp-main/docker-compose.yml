@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  pokemonapp:
+    build: ./
+   
+
+    ports:
+      - "80:80"
+
+    stdin_open: true
+    tty: true
+    
