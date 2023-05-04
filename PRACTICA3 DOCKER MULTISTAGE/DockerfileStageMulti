@@ -1,0 +1,27 @@
+FROM node:19.2-alpine3.16 as desarrollo-dependencias
+WORKDIR /app
+COPY package.json ./
+RUN npm install
+
+FROM node:19.2-alpine3.16 as prueba
+WORKDIR /app
+COPY --from=desarrollo-dependencias /app/node_modules ./node_modules
+COPY . .
+ENV PORT=80
+ENV MONGO='mongodb+srv://aragundi:1234@base.ksmncfn.mongodb.net/Practica3?retryWrites=true&w=majority'
+RUN npm run test
+
+FROM node:19.2-alpine3.16 as produccion-dependencias
+WORKDIR /app
+COPY package.json ./
+RUN npm install --prod
+
+FROM node:19.2-alpine3.16 as produc
+WORKDIR /app
+COPY --from=produccion-dependencias /app/node_modules ./node_modules
+COPY app.js ./
+COPY models/ ./models
+ENV PORT=80
+ENV MONGO='mongodb+srv://aragundi:1234@base.ksmncfn.mongodb.net/Practica3?retryWrites=true&w=majority'
+EXPOSE 80
+CMD [ "node", "app.js"]
