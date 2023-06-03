@@ -1,8 +1,8 @@
 ## Explicación 
 En esta práctica se trabajo con la entidad y los metodos HTTP. 
 ## Comandos usados
-npm i -g @nestjs/cli 
-npm install --global yarn
+npm i -g @nestjs/cli  <br>
+npm install --global yarn   <br>
 nest g resource vehiculo 
 
 
